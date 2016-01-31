@@ -69,5 +69,19 @@ unix:SOURCES += $$PWD/vendor/breakpad/src/common/linux/elfutils.cc
 unix:SOURCES += $$PWD/vendor/breakpad/src/common/string_conversion.cc
 unix:SOURCES += $$PWD/vendor/breakpad/src/common/convert_UTF.c
 
-# breakpad app need debug info inside binaries
+## breakpad needs debug info inside binaries
+
+win32-msvc* {
+    # generate the symbol file
+    QMAKE_LFLAGS_RELEASE += /MAP /debug /opt:ref
+    QMAKE_CFLAGS_RELEASE += -Zi
+    QMAKE_CXXFLAGS_RELEASE += -Zi
+}
+
+unix:QMAKE_CFLAGS += -g
 unix:QMAKE_CXXFLAGS += -g
+
+# prevent undue optimization, which ruins breakpad's backtrace
+QMAKE_CXXFLAGS_RELEASE -= -O
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
