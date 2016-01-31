@@ -82,6 +82,9 @@ unix:QMAKE_CFLAGS += -g
 unix:QMAKE_CXXFLAGS += -g
 
 # prevent undue optimization, which ruins breakpad's backtrace
+QMAKE_CFLAGS_RELEASE -= -O
+QMAKE_CFLAGS_RELEASE -= -O1
+QMAKE_CFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
